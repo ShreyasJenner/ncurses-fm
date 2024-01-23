@@ -1,7 +1,6 @@
 /*
  * main c program
  * calls menu display
- * accepts command line arguments
  */
 
 // STANDARD HEADER FILES //
@@ -16,17 +15,23 @@
 
 
 int main() {
+    FILE *file,*f;
+    file = fopen("directories.txt","r");
+
     int argc,i;
-    scanf("%d",&argc);
-    
+    fscanf(file,"%d",&argc);
+
     char **argv = (char **)(calloc(argc,sizeof(char*)));
+    char *s;
+
 
     for(i=0;i<argc;i++) {
         argv[i] = calloc(1,sizeof(char)*10);
-        scanf("%s",argv[i]);
+        fscanf(file,"%s",argv[i]);
     }
-    char* s = menu_display(argc, argv);
 
-    printf("%s\n",s);
+    menu_display(argc, argv);
+
+    fclose(file);
     return 0;
 }

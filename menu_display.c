@@ -10,11 +10,13 @@
 #include "print_title.h"
 // HEADER FILES //
 
-char* menu_display(int argc, char **argv) {
+void menu_display(int argc, char **argv) {
     // Declaration //
     ITEM **my_items;
     MENU *my_menu;
     WINDOW *my_menu_win, *title_win;
+
+    FILE *r = fopen("directories.txt","r");
     
     char *name=".";
 
@@ -113,9 +115,10 @@ char* menu_display(int argc, char **argv) {
 
             case 10:
                 {
-                    ITEM *cur = current_item(my_menu);
-                    name = (char *)item_description(cur);
-                    goto exit_loop;
+                    FILE *f = fopen("selected.txt","w");
+                    name = (char *)item_description(current_item(my_menu));
+                    fprintf(f,"%s",name);
+                    fclose(f);
                 }
                 break;
             
@@ -127,11 +130,14 @@ char* menu_display(int argc, char **argv) {
                 menu_driver(my_menu, REQ_SCR_UPAGE);
                 break;
         }
+        fscanf(r,"%d",stdout);
+        for(i=0;i<argc;i++) {
+            fscanf(r,"%s",argv[i]);
+        }
         wrefresh(my_menu_win);
     }
     /* Main Loop */
   
-exit_loop:
     
     // Free memory //
     unpost_menu(my_menu);
@@ -143,6 +149,5 @@ exit_loop:
 
     endwin();
     fclose(tty);
-    return name;
 }
 
