@@ -1,5 +1,7 @@
-#define wl 10
-#define wc 100
+#define WL 10
+#define WC 100
+
+//trial program
 
 #include <menu.h>
 #include <curses.h>
@@ -48,31 +50,16 @@ char** create_words(int no,int size) {
 
 ITEM** assign_items(int no) {
     int i;
-    ITEM** items = (ITEM **)calloc(wc,sizeof(ITEM *));
+    ITEM** items = (ITEM **)calloc(no,sizeof(ITEM *));
 
-    char name[no][3];
-
+    FILE *file = fopen("data/opts","r");
     for(i=0;i<no;i++) {
-        sprintf(name[i],"%d",i);
-        items[i] = new_item(name[i],"");
-        //mvwprintw(menu_win,10+i,10,"%s",word[i]);
+        items[i] = new_item("post","");
     }
+    fclose(file);
     items[no] = NULL;
 
     return items;
-}
-
-void modify_items(int no, ITEM **item, char **descrip) {
-    int i;
-    for(i=0;i<no;i++) {
-        
-        FILE *ptr = fopen("/dev/pts/4","w");
-        fprintf(ptr,"%s %d\n","inside loop",i);
-        fclose(ptr);
-
-        item[i]->description.str = descrip[i];
-        item[i]->description.length = strlen(descrip[i]);
-    }
 }
 
 void destroy_items(int no,ITEM **item) {
@@ -81,29 +68,28 @@ void destroy_items(int no,ITEM **item) {
         free_item(item[i]);
 }
 
-void extra_handling(ITEM **items, int prev, int curr) {
-    int i;
-    if(prev>curr) {
-        for(i=prev;i<curr;i++)
-            free_item(items[i]);
-        items[prev] = NULL;
-    } else {
-        char name[curr-prev+1][3];
+void redraw_menu(MENU *menu, ITEM **items) {
 
-        for(i=0;i<curr;i++) {
-            sprintf(name[i],"%d",prev++);
-            items[prev-1] = new_item(name[i],"");
-            //mvwprintw(menu_win,10+i,10,"%s",word[i]);
-        }
-        items[curr] = NULL;
+    /*
+    ITEM **new = (ITEM **)calloc(4,sizeof(ITEM*));
 
-    }
+    new[0] = new_item("4","four");
+    new[1] = new_item("5","five");
+    new[2] = new_item("6","six");
+    new[3] = new_item("7","seven");
+    new[4] = NULL;
+    */
+    ITEM **new = assign_items(3);
+
+    set_menu_items(menu,new);
+    destroy_items(3,items);
 }
 
 
 int main() {
 
-    ITEM **items,**new,**temp;
+    ITEM **items,**new;
+    ITEM *temp;
     MENU *menu;
     WINDOW *menu_win, *menu_sub_win;
 
@@ -125,57 +111,46 @@ int main() {
     
     wrefresh(menu_win);
 
-        no = word_count();
-        prev = no;
+        items = (ITEM **)calloc(3,sizeof(ITEM *));
+        new = (ITEM **)calloc(3,sizeof(ITEM *));
 
-        char **word;
-
-        word = create_words(wc,10);
-
-        store_words(word);
-
-        items = assign_items(no);
-        modify_items(no,items,word);
+        items[0] = new_item("one","");
+        items[1] = new_item("two","");
+        items[2] = new_item("three","");
+        items[3] = NULL;
 
         menu = new_menu((ITEM **)items);
 
         set_menu_win(menu, menu_win);
         set_menu_sub(menu, menu_sub_win);
 
-        box(menu_win, 0,0);
-
-        post_menu(menu);
-        wrefresh(menu_win);
-
-        FILE *ptr;
-    while((c=getchar())!='q') {
-        no = word_count();
-
-        if(prev!=no) {
-            extra_handling(items,prev,no);
-            prev = no;
-        }
-        unpost_menu(menu);
-
-        display(menu_win,no,word);
-
-        store_words(word);
-        
-        display(menu_win,no,word);
-
-
-        modify_items(no,items,word);
-
         box(menu_win,0,0);
-        doupdate();
+
         post_menu(menu);
         wrefresh(menu_win);
-    }
+
+        getchar();
+
+        /*
+        unpost_menu(menu);
+        new[0] = new_item("4","four");
+        new[1] = new_item("5","five");
+        new[2] = new_item("6","six");
+        new[3] = NULL;
+        */
+        unpost_menu(menu);
+        redraw_menu(menu, items);
+
+        post_menu(menu);
+        box(menu_win,0,0);
+        wrefresh(menu_win);
+
+        getchar();
+
+
+
     unpost_menu(menu);
-
-
-    destroy_items(no, items);
-
+    destroy_items(no,items);
     endwin();
     delscreen(screen);
     fclose(tty);

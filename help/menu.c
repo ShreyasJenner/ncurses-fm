@@ -1,5 +1,7 @@
-#define wl 10
-#define wc 100
+#define WL 10
+#define WC 100
+
+//trial program
 
 #include <menu.h>
 #include <curses.h>
@@ -48,13 +50,13 @@ char** create_words(int no,int size) {
 
 ITEM** assign_items(int no) {
     int i;
-    ITEM** items = (ITEM **)calloc(wc,sizeof(ITEM *));
+    ITEM** items = (ITEM **)calloc(WC,sizeof(ITEM *));
 
     char name[no][3];
 
     for(i=0;i<no;i++) {
         sprintf(name[i],"%d",i);
-        items[i] = new_item(name[i],"");
+        items[i] = new_item(name[i],"check");
         //mvwprintw(menu_win,10+i,10,"%s",word[i]);
     }
     items[no] = NULL;
@@ -81,24 +83,6 @@ void destroy_items(int no,ITEM **item) {
         free_item(item[i]);
 }
 
-void extra_handling(ITEM **items, int prev, int curr) {
-    int i;
-    if(prev>curr) {
-        for(i=prev;i<curr;i++)
-            free_item(items[i]);
-        items[prev] = NULL;
-    } else {
-        char name[curr-prev+1][3];
-
-        for(i=0;i<curr;i++) {
-            sprintf(name[i],"%d",prev++);
-            items[prev-1] = new_item(name[i],"");
-            //mvwprintw(menu_win,10+i,10,"%s",word[i]);
-        }
-        items[curr] = NULL;
-
-    }
-}
 
 
 int main() {
@@ -130,7 +114,7 @@ int main() {
 
         char **word;
 
-        word = create_words(wc,10);
+        word = create_words(WC,10);
 
         store_words(word);
 
@@ -151,10 +135,6 @@ int main() {
     while((c=getchar())!='q') {
         no = word_count();
 
-        if(prev!=no) {
-            extra_handling(items,prev,no);
-            prev = no;
-        }
         unpost_menu(menu);
 
         display(menu_win,no,word);
@@ -163,8 +143,8 @@ int main() {
         
         display(menu_win,no,word);
 
-
         modify_items(no,items,word);
+
 
         box(menu_win,0,0);
         doupdate();
