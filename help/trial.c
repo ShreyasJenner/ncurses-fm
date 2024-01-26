@@ -48,16 +48,22 @@ char** create_words(int no,int size) {
     return word;
 }
 
-ITEM** assign_items(int no) {
+ITEM** assign_items(int no, char **word) {
     int i;
     ITEM** items = (ITEM **)calloc(no,sizeof(ITEM *));
 
     FILE *file = fopen("data/opts","r");
+    size_t cap[no];
     for(i=0;i<no;i++) {
-        items[i] = new_item("post","");
+        getline(&word[i], &cap[i], file);
+        if(word[i][strlen(word[i])-1] = '\n')
+            word[i][strlen(word[i])-1] = '\0';
     }
-    fclose(file);
+    for(i=0;i<no;i++) {
+        items[i] = new_item(word[i],"");
+    }
     items[no] = NULL;
+    fclose(file);
 
     return items;
 }
@@ -68,33 +74,25 @@ void destroy_items(int no,ITEM **item) {
         free_item(item[i]);
 }
 
-void redraw_menu(MENU *menu, ITEM **items) {
+ITEM** redraw_menu(MENU *menu, ITEM **items, char** word) {
 
-    /*
-    ITEM **new = (ITEM **)calloc(4,sizeof(ITEM*));
-
-    new[0] = new_item("4","four");
-    new[1] = new_item("5","five");
-    new[2] = new_item("6","six");
-    new[3] = new_item("7","seven");
-    new[4] = NULL;
-    */
-    ITEM **new = assign_items(3);
+    ITEM **new = assign_items(3,word);
 
     set_menu_items(menu,new);
-    destroy_items(3,items);
+
+    return new;
 }
 
 
 int main() {
 
-    ITEM **items,**new;
-    ITEM *temp;
+    ITEM **items,**new,**temp;
     MENU *menu;
     WINDOW *menu_win, *menu_sub_win;
 
     int nlines,ncols,starty,startx,c='a';
     int no,i,prev;
+    char **word,**tempword;
 
     FILE *tty = fopen("/dev/tty", "r+");
     SCREEN *screen = newterm(NULL, tty, tty);
@@ -113,42 +111,49 @@ int main() {
 
         items = (ITEM **)calloc(3,sizeof(ITEM *));
         new = (ITEM **)calloc(3,sizeof(ITEM *));
+        word = (char **)calloc(WC,sizeof(char)*10);
 
+        /*
         items[0] = new_item("one","");
         items[1] = new_item("two","");
         items[2] = new_item("three","");
         items[3] = NULL;
+        */
 
         menu = new_menu((ITEM **)items);
 
         set_menu_win(menu, menu_win);
         set_menu_sub(menu, menu_sub_win);
 
-        box(menu_win,0,0);
 
-        post_menu(menu);
-        wrefresh(menu_win);
-
-        getchar();
-
-        /*
-        unpost_menu(menu);
-        new[0] = new_item("4","four");
-        new[1] = new_item("5","five");
-        new[2] = new_item("6","six");
-        new[3] = NULL;
-        */
-        unpost_menu(menu);
-        redraw_menu(menu, items);
+        temp = items;
+        items = redraw_menu(menu, items, word);
+        destroy_items(3,temp);
 
         post_menu(menu);
         box(menu_win,0,0);
         wrefresh(menu_win);
+        size_t cap[no];
 
-        getchar();
+        while((c=getchar())!='q') {
+
+            unpost_menu(menu);
+            tempword = word;
+            temp = items;
+            word = (char **)calloc(WC,10*sizeof(char));
+            items = assign_items(3,word);
+            free(temp);
+            free(tempword);
+
+
+            post_menu(menu);
+            box(menu_win,0,0);
+            wrefresh(menu_win);
+        }
 
 
 
+    free(word);
     unpost_menu(menu);
     destroy_items(no,items);
     endwin();

@@ -1,2 +1,2 @@
 all:
-	@gcc -lmenu -lncurses trial.c
+	@gcc -lmenu -lncurses trial.c -g

@@ -1,0 +1,168 @@
+==16400== Memcheck, a memory error detector
+==16400== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
+==16400== Using Valgrind-3.22.0 and LibVEX; rerun with -h for copyright info
+==16400== Command: ./a.out
+==16400== Parent PID: 9822
+==16400== 
+==16400== Invalid write of size 8
+==16400==    at 0x109731: assign_items (trial.c:66)
+==16400==    by 0x1097C7: redraw_menu (trial.c:79)
+==16400==    by 0x10997A: main (trial.c:130)
+==16400==  Address 0x4b30568 is 0 bytes after a block of size 24 alloc'd
+==16400==    at 0x4848953: calloc (vg_replace_malloc.c:1595)
+==16400==    by 0x109578: assign_items (trial.c:53)
+==16400==    by 0x1097C7: redraw_menu (trial.c:79)
+==16400==    by 0x10997A: main (trial.c:130)
+==16400== 
+==16400== Invalid read of size 8
+==16400==    at 0x487C2F0: _nc_Connect_Items (m_global.c:183)
+==16400==    by 0x487CF8A: set_menu_items (m_items.c:72)
+==16400==    by 0x1097DE: redraw_menu (trial.c:81)
+==16400==    by 0x10997A: main (trial.c:130)
+==16400==  Address 0x4b30568 is 0 bytes after a block of size 24 alloc'd
+==16400==    at 0x4848953: calloc (vg_replace_malloc.c:1595)
+==16400==    by 0x109578: assign_items (trial.c:53)
+==16400==    by 0x1097C7: redraw_menu (trial.c:79)
+==16400==    by 0x10997A: main (trial.c:130)
+==16400== 
+==16400== Invalid read of size 8
+==16400==    at 0x487C397: _nc_Connect_Items (m_global.c:194)
+==16400==    by 0x487CF8A: set_menu_items (m_items.c:72)
+==16400==    by 0x1097DE: redraw_menu (trial.c:81)
+==16400==    by 0x10997A: main (trial.c:130)
+==16400==  Address 0x4b30568 is 0 bytes after a block of size 24 alloc'd
+==16400==    at 0x4848953: calloc (vg_replace_malloc.c:1595)
+==16400==    by 0x109578: assign_items (trial.c:53)
+==16400==    by 0x1097C7: redraw_menu (trial.c:79)
+==16400==    by 0x10997A: main (trial.c:130)
+==16400== 
+==16400== Invalid read of size 8
+==16400==    at 0x487C3E0: UnknownInlinedFun (m_global.c:118)
+==16400==    by 0x487C3E0: _nc_Connect_Items (m_global.c:212)
+==16400==    by 0x487CF8A: set_menu_items (m_items.c:72)
+==16400==    by 0x1097DE: redraw_menu (trial.c:81)
+==16400==    by 0x10997A: main (trial.c:130)
+==16400==  Address 0x4b30568 is 0 bytes after a block of size 24 alloc'd
+==16400==    at 0x4848953: calloc (vg_replace_malloc.c:1595)
+==16400==    by 0x109578: assign_items (trial.c:53)
+==16400==    by 0x1097C7: redraw_menu (trial.c:79)
+==16400==    by 0x10997A: main (trial.c:130)
+==16400== 
+==16400== Invalid read of size 8
+==16400==    at 0x487A99A: UnknownInlinedFun (m_global.c:303)
+==16400==    by 0x487A99A: _nc_Calculate_Item_Length_and_Width (m_global.c:346)
+==16400==    by 0x487C1D4: set_menu_format (m_format.c:102)
+==16400==    by 0x487C427: _nc_Connect_Items (m_global.c:216)
+==16400==    by 0x487CF8A: set_menu_items (m_items.c:72)
+==16400==    by 0x1097DE: redraw_menu (trial.c:81)
+==16400==    by 0x10997A: main (trial.c:130)
+==16400==  Address 0x4b30568 is 0 bytes after a block of size 24 alloc'd
+==16400==    at 0x4848953: calloc (vg_replace_malloc.c:1595)
+==16400==    by 0x109578: assign_items (trial.c:53)
+==16400==    by 0x1097C7: redraw_menu (trial.c:79)
+==16400==    by 0x10997A: main (trial.c:130)
+==16400== 
+==16400== Invalid write of size 8
+==16400==    at 0x109731: assign_items (trial.c:66)
+==16400==    by 0x1097C7: redraw_menu (trial.c:79)
+==16400==    by 0x109A27: main (trial.c:143)
+==16400==  Address 0x4b33bf8 is 0 bytes after a block of size 24 alloc'd
+==16400==    at 0x4848953: calloc (vg_replace_malloc.c:1595)
+==16400==    by 0x109578: assign_items (trial.c:53)
+==16400==    by 0x1097C7: redraw_menu (trial.c:79)
+==16400==    by 0x109A27: main (trial.c:143)
+==16400== 
+==16400== Invalid read of size 8
+==16400==    at 0x487A84A: UnknownInlinedFun (m_global.c:150)
+==16400==    by 0x487A84A: _nc_Disconnect_Items (m_global.c:241)
+==16400==    by 0x487CF78: set_menu_items (m_items.c:68)
+==16400==    by 0x1097DE: redraw_menu (trial.c:81)
+==16400==    by 0x109A27: main (trial.c:143)
+==16400==  Address 0x4b30568 is 0 bytes after a block of size 24 alloc'd
+==16400==    at 0x4848953: calloc (vg_replace_malloc.c:1595)
+==16400==    by 0x109578: assign_items (trial.c:53)
+==16400==    by 0x1097C7: redraw_menu (trial.c:79)
+==16400==    by 0x10997A: main (trial.c:130)
+==16400== 
+==16400== Invalid read of size 8
+==16400==    at 0x487C2F0: _nc_Connect_Items (m_global.c:183)
+==16400==    by 0x487CF8A: set_menu_items (m_items.c:72)
+==16400==    by 0x1097DE: redraw_menu (trial.c:81)
+==16400==    by 0x109A27: main (trial.c:143)
+==16400==  Address 0x4b33bf8 is 0 bytes after a block of size 24 alloc'd
+==16400==    at 0x4848953: calloc (vg_replace_malloc.c:1595)
+==16400==    by 0x109578: assign_items (trial.c:53)
+==16400==    by 0x1097C7: redraw_menu (trial.c:79)
+==16400==    by 0x109A27: main (trial.c:143)
+==16400== 
+==16400== Invalid read of size 8
+==16400==    at 0x487C397: _nc_Connect_Items (m_global.c:194)
+==16400==    by 0x487CF8A: set_menu_items (m_items.c:72)
+==16400==    by 0x1097DE: redraw_menu (trial.c:81)
+==16400==    by 0x109A27: main (trial.c:143)
+==16400==  Address 0x4b33bf8 is 0 bytes after a block of size 24 alloc'd
+==16400==    at 0x4848953: calloc (vg_replace_malloc.c:1595)
+==16400==    by 0x109578: assign_items (trial.c:53)
+==16400==    by 0x1097C7: redraw_menu (trial.c:79)
+==16400==    by 0x109A27: main (trial.c:143)
+==16400== 
+==16400== Invalid read of size 8
+==16400==    at 0x487C3E0: UnknownInlinedFun (m_global.c:118)
+==16400==    by 0x487C3E0: _nc_Connect_Items (m_global.c:212)
+==16400==    by 0x487CF8A: set_menu_items (m_items.c:72)
+==16400==    by 0x1097DE: redraw_menu (trial.c:81)
+==16400==    by 0x109A27: main (trial.c:143)
+==16400==  Address 0x4b33bf8 is 0 bytes after a block of size 24 alloc'd
+==16400==    at 0x4848953: calloc (vg_replace_malloc.c:1595)
+==16400==    by 0x109578: assign_items (trial.c:53)
+==16400==    by 0x1097C7: redraw_menu (trial.c:79)
+==16400==    by 0x109A27: main (trial.c:143)
+==16400== 
+==16400== Conditional jump or move depends on uninitialised value(s)
+==16400==    at 0x10979D: destroy_items (trial.c:73)
+==16400==    by 0x109ACB: main (trial.c:157)
+==16400== 
+==16400== 
+==16400== HEAP SUMMARY:
+==16400==     in use at exit: 36,672 bytes in 344 blocks
+==16400==   total heap usage: 1,923 allocs, 1,579 frees, 757,404 bytes allocated
+==16400== 
+==16400== 24 bytes in 1 blocks are definitely lost in loss record 4 of 14
+==16400==    at 0x4848953: calloc (vg_replace_malloc.c:1595)
+==16400==    by 0x1098FB: main (trial.c:112)
+==16400== 
+==16400== 24 bytes in 1 blocks are definitely lost in loss record 5 of 14
+==16400==    at 0x4848953: calloc (vg_replace_malloc.c:1595)
+==16400==    by 0x10990E: main (trial.c:113)
+==16400== 
+==16400== 648 (96 direct, 552 indirect) bytes in 1 blocks are definitely lost in loss record 10 of 14
+==16400==    at 0x4848953: calloc (vg_replace_malloc.c:1595)
+==16400==    by 0x487C7BC: new_item (m_item_new.c:126)
+==16400==    by 0x109701: assign_items (trial.c:63)
+==16400==    by 0x1097C7: redraw_menu (trial.c:79)
+==16400==    by 0x10997A: main (trial.c:130)
+==16400== 
+==16400== 861 (184 direct, 677 indirect) bytes in 1 blocks are definitely lost in loss record 11 of 14
+==16400==    at 0x4848953: calloc (vg_replace_malloc.c:1595)
+==16400==    by 0x487D073: new_menu_sp (m_new.c:58)
+==16400==    by 0x109931: main (trial.c:123)
+==16400== 
+==16400== 34,992 (5,184 direct, 29,808 indirect) bytes in 54 blocks are definitely lost in loss record 14 of 14
+==16400==    at 0x4848953: calloc (vg_replace_malloc.c:1595)
+==16400==    by 0x487C7BC: new_item (m_item_new.c:126)
+==16400==    by 0x109701: assign_items (trial.c:63)
+==16400==    by 0x1097C7: redraw_menu (trial.c:79)
+==16400==    by 0x109A27: main (trial.c:143)
+==16400== 
+==16400== LEAK SUMMARY:
+==16400==    definitely lost: 5,512 bytes in 58 blocks
+==16400==    indirectly lost: 31,037 bytes in 283 blocks
+==16400==      possibly lost: 0 bytes in 0 blocks
+==16400==    still reachable: 123 bytes in 3 blocks
+==16400==         suppressed: 0 bytes in 0 blocks
+==16400== Reachable blocks (those to which a pointer was found) are not shown.
+==16400== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==16400== 
+==16400== Use --track-origins=yes to see where uninitialised values come from
+==16400== For lists of detected and suppressed errors, rerun with: -s
+==16400== ERROR SUMMARY: 341 errors from 16 contexts (suppressed: 0 from 0)
