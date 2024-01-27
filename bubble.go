@@ -3,21 +3,25 @@ package main
 import (
     "fmt"
     "os"
-
+    "os/exec"
     tea "github.com/charmbracelet/bubbletea"
 )
 
 type model struct {
     choices []string
     cursor int
-    selected map[int]struct{}
 }
 
 func initialModel() model {
+    var m model
+    m.choices = ReadFile("input")
+
+    return m
+    /*
     return model{
-        choices: []string{"Buy carrots", "Buy celery", "Buy toy"},
-        selected: make(map[int]struct{}),
+        choice: ReadFile("input")
     }
+    */
 }
 
 func (m model) Init() tea.Cmd {
@@ -26,6 +30,7 @@ func (m model) Init() tea.Cmd {
 }
 
 func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
+    m.choices = ReadFile("input")
     switch msg := msg.(type) {
 
     // Is it a key press?
@@ -53,12 +58,7 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
         // The "enter" key and the spacebar (a literal space) toggle
         // the selected state for the item that the cursor is pointing at.
         case "enter", " ":
-            _, ok := m.selected[m.cursor]
-            if ok {
-                delete(m.selected, m.cursor)
-            } else {
-                m.selected[m.cursor] = struct{}{}
-            }
+            WriteFile("output", m.choices[m.cursor])
         }
     }
 
@@ -80,14 +80,8 @@ func (m model) View() string {
             cursor = ">" // cursor!
         }
 
-        // Is this choice selected?
-        checked := " " // not selected
-        if _, ok := m.selected[i]; ok {
-            checked = "x" // selected!
-        }
-
         // Render the row
-        s += fmt.Sprintf("%s [%s] %s\n", cursor, checked, choice)
+        s += fmt.Sprintf("%s %s\n", cursor, choice)
     }
 
     // The footer
@@ -98,6 +92,7 @@ func (m model) View() string {
 }
 
 func main() {
+    WriteFile("output","")
     p := tea.NewProgram(initialModel())
     if _, err := p.Run(); err != nil {
         fmt.Printf("Alas, there's been an error: %v", err)
